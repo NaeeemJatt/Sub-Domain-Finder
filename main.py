@@ -11,7 +11,7 @@ class SubdomainFinderGUI(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Sub-Domain Finder")
+        self.setWindowTitle("Sub_Domain_Finder")
         self.setGeometry(100, 100, 800, 600)  # Increase the overall size of the window
 
         # Set background color to a darker navy blue
@@ -22,7 +22,7 @@ class SubdomainFinderGUI(QMainWindow):
 
         # Title Label
         title = QLabel("Sub-Domain-Finder")
-        title.setFont(QFont("Arial", 30, QFont.Bold))  # Increased font size
+        title.setFont(QFont("Times New Roman", 30, QFont.Bold))  # Increased font size
         title.setAlignment(Qt.AlignCenter)
         title.setStyleSheet("color: white;")
         layout.addWidget(title)
