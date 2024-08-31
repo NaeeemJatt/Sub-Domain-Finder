@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QWidget, \
-    QGraphicsDropShadowEffect
+    QGraphicsDropShadowEffect, QMessageBox
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve
 from PyQt5.QtGui import QColor, QFont
 import requests
@@ -11,21 +11,28 @@ class SubdomainFinderGUI(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Sub_Domain_Finder")
-        self.setGeometry(100, 100, 800, 600)  # Increase the overall size of the window
+        self.setWindowTitle("Sub-Domain-Finder")
+        self.setGeometry(100, 100, 800, 600)
 
-        # Set background color to a darker navy blue
-        self.setStyleSheet("background-color: #000080;")
+        # Set background color to a dark color
+        self.setStyleSheet("background-color: #2C3E50;")
 
         # Layout
         layout = QVBoxLayout()
 
         # Title Label
         title = QLabel("Sub-Domain-Finder")
-        title.setFont(QFont("Times New Roman", 30, QFont.Bold))  # Increased font size
+        title.setFont(QFont("Arial", 30, QFont.Bold))  # Font size
         title.setAlignment(Qt.AlignCenter)
         title.setStyleSheet("color: white;")
         layout.addWidget(title)
+
+        # Author Label
+        author = QLabel("by Naeem Jatt")
+        author.setFont(QFont("Arial", 14))
+        author.setAlignment(Qt.AlignCenter)
+        author.setStyleSheet("color: #ECF0F1;")  # Slightly different color for author name
+        layout.addWidget(author)
 
         # Domain Input
         self.domain_input = QLineEdit()
@@ -34,7 +41,7 @@ class SubdomainFinderGUI(QMainWindow):
             padding: 15px; 
             font-size: 18px; 
             color: white; 
-            background-color: #000080; 
+            background-color: #34495E; 
             border: 1px solid white;
             border-radius: 10px;
         """)
@@ -48,15 +55,18 @@ class SubdomainFinderGUI(QMainWindow):
                 color: white; 
                 padding: 15px; 
                 font-size: 18px;
-                border-radius: 15px;  /* 30% rounded corners */
+                border-radius: 15px;
+            }
+            QPushButton:hover {
+                background-color: #2980B9;
             }
             QPushButton:pressed {
                 background-color: #4682B4;
             }
         """)
-        self.start_button.setFixedWidth(300)  # Set a fixed width for the button
+        self.start_button.setFixedWidth(300)
         self.start_button.clicked.connect(self.start_enumeration)
-        layout.addWidget(self.start_button, alignment=Qt.AlignCenter)  # Center align the button in the layout
+        layout.addWidget(self.start_button, alignment=Qt.AlignCenter)
 
         # Drop shadow effect for the button
         shadow_effect = QGraphicsDropShadowEffect(self.start_button)
@@ -70,6 +80,7 @@ class SubdomainFinderGUI(QMainWindow):
         self.result_display.setReadOnly(True)
         self.result_display.setStyleSheet("padding: 15px; font-size: 16px; background-color: white;")
         layout.addWidget(self.result_display)
+        self.result_display.setFixedHeight(200)  # Decreased height of result box
 
         # Set central widget
         container = QWidget()
@@ -85,8 +96,13 @@ class SubdomainFinderGUI(QMainWindow):
         animation.setEasingCurve(QEasingCurve.OutBounce)
         animation.start()
 
-        # Subdomain enumeration logic
+        # Check if domain input is empty
         domain = self.domain_input.text()
+        if not domain:
+            QMessageBox.warning(self, "Input Error", "Please enter a domain name.",)
+            return
+
+        # Subdomain enumeration logic
         subdomains_file = "subdomains-10000.txt"
 
         self.result_display.clear()

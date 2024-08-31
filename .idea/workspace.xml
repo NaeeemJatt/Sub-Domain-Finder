@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a38caba-b6e8-4331-ae9b-2214d8ed50cf" name="Changes" comment="Some basic GUI in required format">
+    <list default="true" id="5a38caba-b6e8-4331-ae9b-2214d8ed50cf" name="Changes" comment="Background color changing">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,13 +108,22 @@
       <option name="project" value="LOCAL" />
       <updated>1725097075687</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Background color changing">
+      <option name="closed" value="true" />
+      <created>1725097501470</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1725097501470</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Working properly in CLI" />
     <MESSAGE value="Simple GUI" />
     <MESSAGE value="Some basic GUI in required format" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some basic GUI in required format" />
+    <MESSAGE value="Background color changing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Background color changing" />
   </component>
 </project>
