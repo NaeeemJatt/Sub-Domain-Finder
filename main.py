@@ -1,10 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QWidget, \
-    QGraphicsDropShadowEffect, QMessageBox
+    QMessageBox
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QThread, pyqtSignal, pyqtSlot
-from PyQt5.QtGui import QColor, QFont
-import requests
-from typing import List
+from PyQt5.QtGui import QColor, QFont, QIcon
 
 
 class SubdomainFinderWorker(QThread):
@@ -12,17 +10,17 @@ class SubdomainFinderWorker(QThread):
     finished = pyqtSignal()
     stop_requested = pyqtSignal()
 
-    def __init__(self, domain: str, subdomains: List[str]):
+    def __init__(self, domain: str, subdomains):
         super().__init__()
         self.domain = domain
         self.subdomains = subdomains
         self._stop_flag = False
 
     def run(self):
-        valid_subdomains = self.enumerate_subdomains(self.domain, self.subdomains)
+        self.enumerate_subdomains(self.domain, self.subdomains)
         self.finished.emit()
 
-    def enumerate_subdomains(self, domain: str, subdomains: List[str]) -> None:
+    def enumerate_subdomains(self, domain: str, subdomains) -> None:
         valid_subdomains = []
         for idx, subdomain in enumerate(subdomains, start=1):
             if self._stop_flag:
@@ -85,48 +83,46 @@ class SubdomainFinderGUI(QMainWindow):
         layout.addWidget(self.domain_input)
 
         # Start Button with New Design
-        self.start_button = QPushButton("Start Enumeration")
+        self.start_button = QPushButton("START ENUMERATION")
         self.start_button.setStyleSheet("""
             QPushButton {
-                background-color: #3498DB;  # Blue color
+                background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #3a7bd5, stop:1 #00d2ff); 
                 color: white; 
-                padding: 12px 18px;  # Adjusted button size
+                padding: 12px 18px;
                 font-size: 18px;
-                border-radius: 12px;
-                border: 2px solid #2980B9;  # Darker blue for border
+                border-radius: 25px;
             }
             QPushButton:hover {
-                background-color: #2980B9;
+                background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #3a7bd5, stop:1 #00d2ff);
             }
             QPushButton:pressed {
-                background-color: #3498DB;
-                border: 2px solid #2471A3;
+                background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #3a7bd5, stop:1 #00d2ff);
+                border: 2px solid #2980B9;  
             }
         """)
-        self.start_button.setFixedWidth(200)  # Decreased button width
+        self.start_button.setFixedWidth(250)
         self.start_button.clicked.connect(self.start_enumeration)
         layout.addWidget(self.start_button, alignment=Qt.AlignCenter)
 
         # Stop Button with New Design
-        self.stop_button = QPushButton("Stop Enumeration")
+        self.stop_button = QPushButton("STOP ENUMERATION")
         self.stop_button.setStyleSheet("""
             QPushButton {
-                background-color: #E74C3C;  # Red color
+                background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #ff6e7f, stop:1 #bfe9ff); 
                 color: white; 
                 padding: 12px 18px;
                 font-size: 18px;
-                border-radius: 12px;
-                border: 2px solid #C0392B;
+                border-radius: 25px;
             }
             QPushButton:hover {
-                background-color: #C0392B;
+                background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #ff6e7f, stop:1 #bfe9ff);
             }
             QPushButton:pressed {
-                background-color: #E74C3C;
-                border: 2px solid #A93226;
+                background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #ff6e7f, stop:1 #bfe9ff);
+                border: 2px solid #A93226;  
             }
         """)
-        self.stop_button.setFixedWidth(200)
+        self.stop_button.setFixedWidth(250)
         self.stop_button.clicked.connect(self.stop_enumeration)
         layout.addWidget(self.stop_button, alignment=Qt.AlignCenter)
 
@@ -169,12 +165,10 @@ class SubdomainFinderGUI(QMainWindow):
         subdomains_file = "subdomains-10000.txt"
 
         self.result_display.clear()
-        self.result_display.append(f"[*] Enumerating subdomains for: {domain}")
 
         subdomains = self.read_subdomains_from_file(subdomains_file)
 
         if subdomains:
-            self.result_display.append("[*] Checking subdomains from file:")
             # Enable stop button and disable start button
             self.stop_button.setEnabled(True)
             self.start_button.setEnabled(False)
@@ -201,7 +195,7 @@ class SubdomainFinderGUI(QMainWindow):
             self.worker.finished.connect(self.on_enumeration_finished)
             QMessageBox.information(self, "Enumeration Stopped", "Enumeration has been stopped successfully.")
 
-    def read_subdomains_from_file(self, file_path: str) -> List[str]:
+    def read_subdomains_from_file(self, file_path: str):
         try:
             with open(file_path, 'r') as file:
                 subdomains = file.read().splitlines()
