@@ -88,34 +88,34 @@ class SubdomainFinderGUI(QMainWindow):
         self.start_button = QPushButton("Start Enumeration")
         self.start_button.setStyleSheet("""
             QPushButton {
-                background-color: #1ABC9C;  # Turquoise color
+                background-color: #3498DB;  # Blue color
                 color: white; 
-                padding: 10px 15px;  # Adjusted button size
+                padding: 12px 18px;  # Adjusted button size
                 font-size: 18px;
-                border-radius: 10px;
-                border: 2px solid #16A085;  # Darker turquoise for border
+                border-radius: 12px;
+                border: 2px solid #2980B9;  # Darker blue for border
             }
             QPushButton:hover {
-                background-color: #16A085;
+                background-color: #2980B9;
             }
             QPushButton:pressed {
-                background-color: #1ABC9C;
-                border: 2px solid #148F77;
+                background-color: #3498DB;
+                border: 2px solid #2471A3;
             }
         """)
         self.start_button.setFixedWidth(200)  # Decreased button width
         self.start_button.clicked.connect(self.start_enumeration)
         layout.addWidget(self.start_button, alignment=Qt.AlignCenter)
 
-        # Stop Button
+        # Stop Button with New Design
         self.stop_button = QPushButton("Stop Enumeration")
         self.stop_button.setStyleSheet("""
             QPushButton {
                 background-color: #E74C3C;  # Red color
                 color: white; 
-                padding: 10px 15px;
+                padding: 12px 18px;
                 font-size: 18px;
-                border-radius: 10px;
+                border-radius: 12px;
                 border: 2px solid #C0392B;
             }
             QPushButton:hover {
@@ -199,6 +199,7 @@ class SubdomainFinderGUI(QMainWindow):
         if hasattr(self, 'worker') and self.worker.isRunning():
             self.worker.stop()
             self.worker.finished.connect(self.on_enumeration_finished)
+            QMessageBox.information(self, "Enumeration Stopped", "Enumeration has been stopped successfully.")
 
     def read_subdomains_from_file(self, file_path: str) -> List[str]:
         try:
