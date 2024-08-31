@@ -1,6 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QWidget
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QWidget, \
+    QGraphicsDropShadowEffect
+from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve
+from PyQt5.QtGui import QColor, QFont
 import requests
 from typing import List
 
@@ -9,28 +11,56 @@ class SubdomainFinderGUI(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Subdomain Finder")
+        self.setWindowTitle("Sub-Domain Finder")
         self.setGeometry(100, 100, 600, 400)
+
+        # Set background color to navy blue
+        self.setStyleSheet("background-color: navy;")
 
         # Layout
         layout = QVBoxLayout()
 
-        # Label
-        self.label = QLabel("Enter Domain Name:")
-        layout.addWidget(self.label)
+        # Title Label
+        title = QLabel("Sub-Domain-Finder")
+        title.setFont(QFont("Arial", 20, QFont.Bold))
+        title.setAlignment(Qt.AlignCenter)
+        title.setStyleSheet("color: white;")
+        layout.addWidget(title)
 
         # Domain Input
         self.domain_input = QLineEdit()
+        self.domain_input.setPlaceholderText("Enter Domain Name")
+        self.domain_input.setStyleSheet("padding: 10px; font-size: 16px;")
         layout.addWidget(self.domain_input)
 
-        # Start Button
+        # Start Button with Animation
         self.start_button = QPushButton("Start Enumeration")
-        layout.addWidget(self.start_button)
+        self.start_button.setStyleSheet("""
+            QPushButton {
+                background-color: #1E90FF; 
+                color: white; 
+                padding: 10px; 
+                font-size: 16px;
+                border-radius: 5px;
+            }
+            QPushButton:pressed {
+                background-color: #4682B4;
+            }
+        """)
         self.start_button.clicked.connect(self.start_enumeration)
+        layout.addWidget(self.start_button)
 
-        # Results Display
+        # Drop shadow effect for the button
+        shadow_effect = QGraphicsDropShadowEffect(self.start_button)
+        shadow_effect.setBlurRadius(15)
+        shadow_effect.setColor(QColor(0, 0, 0, 160))
+        shadow_effect.setOffset(0, 0)
+        self.start_button.setGraphicsEffect(shadow_effect)
+
+        # Result Display
         self.result_display = QTextEdit()
         self.result_display.setReadOnly(True)
+        self.result_display.setStyleSheet("padding: 10px; font-size: 14px; background-color: white;")
         layout.addWidget(self.result_display)
 
         # Set central widget
@@ -39,6 +69,15 @@ class SubdomainFinderGUI(QMainWindow):
         self.setCentralWidget(container)
 
     def start_enumeration(self):
+        # Button animation
+        animation = QPropertyAnimation(self.start_button, b"geometry")
+        animation.setDuration(200)
+        animation.setStartValue(self.start_button.geometry())
+        animation.setEndValue(self.start_button.geometry().adjusted(0, 0, 0, 5))
+        animation.setEasingCurve(QEasingCurve.OutBounce)
+        animation.start()
+
+        # Subdomain enumeration logic
         domain = self.domain_input.text()
         subdomains_file = "subdomains-10000.txt"
 
