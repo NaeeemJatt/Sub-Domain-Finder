@@ -12,17 +12,17 @@ class SubdomainFinderGUI(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Sub-Domain Finder")
-        self.setGeometry(100, 100, 600, 400)
+        self.setGeometry(100, 100, 800, 600)  # Increase the overall size of the window
 
-        # Set background color to navy blue
-        self.setStyleSheet("background-color: navy;")
+        # Set background color to a darker navy blue
+        self.setStyleSheet("background-color: #000080;")
 
         # Layout
         layout = QVBoxLayout()
 
         # Title Label
         title = QLabel("Sub-Domain-Finder")
-        title.setFont(QFont("Arial", 20, QFont.Bold))
+        title.setFont(QFont("Arial", 30, QFont.Bold))  # Increased font size
         title.setAlignment(Qt.AlignCenter)
         title.setStyleSheet("color: white;")
         layout.addWidget(title)
@@ -30,7 +30,14 @@ class SubdomainFinderGUI(QMainWindow):
         # Domain Input
         self.domain_input = QLineEdit()
         self.domain_input.setPlaceholderText("Enter Domain Name")
-        self.domain_input.setStyleSheet("padding: 10px; font-size: 16px;")
+        self.domain_input.setStyleSheet("""
+            padding: 15px; 
+            font-size: 18px; 
+            color: white; 
+            background-color: #000080; 
+            border: 1px solid white;
+            border-radius: 10px;
+        """)
         layout.addWidget(self.domain_input)
 
         # Start Button with Animation
@@ -39,16 +46,17 @@ class SubdomainFinderGUI(QMainWindow):
             QPushButton {
                 background-color: #1E90FF; 
                 color: white; 
-                padding: 10px; 
-                font-size: 16px;
-                border-radius: 5px;
+                padding: 15px; 
+                font-size: 18px;
+                border-radius: 15px;  /* 30% rounded corners */
             }
             QPushButton:pressed {
                 background-color: #4682B4;
             }
         """)
+        self.start_button.setFixedWidth(300)  # Set a fixed width for the button
         self.start_button.clicked.connect(self.start_enumeration)
-        layout.addWidget(self.start_button)
+        layout.addWidget(self.start_button, alignment=Qt.AlignCenter)  # Center align the button in the layout
 
         # Drop shadow effect for the button
         shadow_effect = QGraphicsDropShadowEffect(self.start_button)
@@ -60,7 +68,7 @@ class SubdomainFinderGUI(QMainWindow):
         # Result Display
         self.result_display = QTextEdit()
         self.result_display.setReadOnly(True)
-        self.result_display.setStyleSheet("padding: 10px; font-size: 14px; background-color: white;")
+        self.result_display.setStyleSheet("padding: 15px; font-size: 16px; background-color: white;")
         layout.addWidget(self.result_display)
 
         # Set central widget
