@@ -90,7 +90,7 @@ class SubdomainFinderGUI(QMainWindow):
                 color: white; 
                 padding: 12px 18px;
                 font-size: 18px;
-                border-radius: 25px;
+                border-radius: 15px;
             }
             QPushButton:hover {
                 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #3a7bd5, stop:1 #00d2ff);
@@ -112,7 +112,7 @@ class SubdomainFinderGUI(QMainWindow):
                 color: white; 
                 padding: 12px 18px;
                 font-size: 18px;
-                border-radius: 25px;
+                border-radius: 15px;
             }
             QPushButton:hover {
                 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #ff6e7f, stop:1 #bfe9ff);
