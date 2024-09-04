@@ -64,9 +64,9 @@ class SubdomainFinderGUI(QMainWindow):
 
         # Author Label
         author = QLabel("by Naeem Jatt")
-        author.setFont(QFont("Georgia", 14))  # Changed font style to Georgia
+        author.setFont(QFont("Georgia", 20))  # Changed font style to Georgia
         author.setAlignment(Qt.AlignCenter)
-        author.setStyleSheet("color: #ECF0F1; margin-top: -15px;")  # Move closer to title
+        author.setStyleSheet("color: #ECF0F1;")  # Move closer to title
         layout.addWidget(author)
 
         # Domain Input
